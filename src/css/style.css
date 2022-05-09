@@ -5,6 +5,12 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: 'Arial';
+}
+
+.title {
+    color: #444444;
+    font-size: 2rem;
 }
 
 
@@ -55,7 +61,7 @@ body {
     border-radius: 4px;
     border: none;
     background: #969595;
-    color:  #444444;
+    color: #444444;
     font-size: 1.05rem;
     outline: none;
     cursor: pointer;
@@ -65,7 +71,18 @@ body {
     vertical-align: top;
     padding: 0;
     -webkit-tap-highlight-color: transparent;
-     flex: 0.5 1 45px;
+    transition: all 0.2s;
+    flex: 0.5 1 45px;
+
+}
+
+.keyboard__key:hover {
+    box-shadow: 0 0 10px rgb(4, 6, 121);
+}
+
+.keyboard__key:active {
+    border-radius: 45%;
+    box-shadow: 0 0 17px rgb(8, 9, 112);
 }
 
 .keyboard__key_long {
@@ -81,5 +98,6 @@ body {
 }
 
 .description, .language {
+    font-size: 1.2rem;
     text-align: center;
 }
