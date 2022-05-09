@@ -18,7 +18,7 @@ const KEY_ENG = [
 
 const KEY_RUS = [
     '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
-    'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', , 'х', 'ъ', '\\',
+    'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\',
     'Caps lock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter',
     'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', '▲', 'Shift',
     'Ctrl', 'Win', 'Alt', 'Space', 'Alt', '◄', '▼', '►', 'Ctrl'
@@ -101,9 +101,7 @@ function init() {
         }
     }
 
-
     addClass(KEY_CODE_TABLE);
-
 
     function useKey(element) {
         switch (element) {
@@ -145,10 +143,60 @@ function init() {
         }
     }
 
-    function deleteElement (element) {
+    function useKeyUp(element) {
+        switch (element) {
+            case 'ShiftLeft':
+                if (!upperLetter) {
+                    document.querySelectorAll('.keyboard__key').forEach(element => {
+                        if (element.textContent.length < 2) element.textContent = element.textContent.toUpperCase()
+                    })
+                    upperLetter = true;
+                } else {
+                    document.querySelectorAll('.keyboard__key').forEach(element => {
+                        if (element.textContent.length < 2) element.textContent = element.textContent.toLowerCase();
+                    })
+                    upperLetter = false;
+                }
+                break
+            case 'ShiftRight':
+                if (!upperLetter) {
+                    document.querySelectorAll('.keyboard__key').forEach(element => {
+                        if (element.textContent.length < 2) element.textContent = element.textContent.toUpperCase()
+                    })
+                    upperLetter = true;
+                } else {
+                    document.querySelectorAll('.keyboard__key').forEach(element => {
+                        if (element.textContent.length < 2) element.textContent = element.textContent.toLowerCase();
+                    })
+                    upperLetter = false;
+                }
+        }
+    }
+
+    function deleteElement(element) {
         if (element === 'Backspace') {
             console.log(TEXTAREA.value.length)
-            TEXTAREA.value =  TEXTAREA.value.substring(0, TEXTAREA.value.length - 1);
+            TEXTAREA.value = TEXTAREA.value.substring(0, TEXTAREA.value.length - 1);
+        }
+    }
+
+//Изменение языка
+    function changeLanguage(element) {
+        if (element === 'ControlLeft' && element === 'ControlLeft') {
+            if (engLanguage) {
+                let elements = document.querySelectorAll('.keyboard__key');
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].textContent = `${KEY_RUS[i]}`;
+                }
+                engLanguage = false;
+            } else {
+                let arrEng = KEY_ENG.flat();
+                let elements = document.querySelectorAll('.keyboard__key');
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].textContent = `${arrEng[i]}`;
+                }
+                engLanguage = true;
+            }
         }
     }
 
@@ -175,7 +223,7 @@ function init() {
         element.addEventListener('mousedown', (e) => {
             useKey(element.dataset.keycode);
             capsLock(element.dataset.keycode);
-            deleteElement (element.dataset.keycode);
+            deleteElement(element.dataset.keycode);
             if (element.textContent.length < 2) {
                 TEXTAREA.value += element.textContent;
             }
@@ -184,15 +232,16 @@ function init() {
 
     document.querySelectorAll('.keyboard__key').forEach(element => {
         element.addEventListener('mouseup', (e) => {
-            useKey(element.dataset.keycode);
+            useKeyUp(element.dataset.keycode);
         })
     })
 
     //События на клавиатуре
     window.addEventListener('keydown', function (event) {
+        changeLanguage(event.code);
         useKey(event.code);
         capsLock(event.code);
-        deleteElement (event.code);
+        deleteElement(event.code);
         let elements = document.querySelectorAll('.keyboard__key');
         for (let i = 0; i < elements.length; i++) {
 
@@ -204,7 +253,7 @@ function init() {
     });
 
     window.addEventListener('keyup', function (event) {
-        useKey(event.code);
+        useKeyUp(event.code);
         let elements = document.querySelectorAll('.keyboard__key');
         for (let i = 0; i < elements.length; i++) {
             if (elements[i].dataset.keycode === `${event.code}`) {
