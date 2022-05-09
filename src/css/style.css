@@ -71,7 +71,7 @@ body {
     vertical-align: top;
     padding: 0;
     -webkit-tap-highlight-color: transparent;
-    transition: all 0.2s;
+    transition: all 0.1s;
     flex: 0.5 1 45px;
 
 }
@@ -87,7 +87,7 @@ body {
 .keyboard__key_active {
     border-radius: 45%;
     box-shadow: 0 0 17px rgb(8, 9, 112);
-    transition: all 0.2s;
+    transition: all 0.1s;
 }
 
 .keyboard__key_long {
